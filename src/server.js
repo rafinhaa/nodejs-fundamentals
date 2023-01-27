@@ -12,15 +12,16 @@ const server = http.createServer((req, res) => {
       .end(JSON.stringify(users));
 
   if (method === "POST" && url === "/users") {
-    users.push({
+    const newUser = {
       id: randomUUID(),
       name: "John Doe",
       email: "johndoe@example.com",
-    });
-    return res.end("Criação de usuários");
+    };
+    users.push(newUser);
+    return res.writeHead(201).end(JSON.stringify(newUser));
   }
 
-  return res.end("Hello World!");
+  return res.writeHead(404).end();
 });
 
 server.listen(3333);
