@@ -1,10 +1,6 @@
-import { randomUUID } from "node:crypto";
 import http from "node:http";
-import { Database } from "./database.js";
 import { routes } from "./routes.js";
 import { json } from "./middlewares/json.js";
-
-const database = new Database();
 
 const server = http.createServer(async (req, res) => {
   const { method, url } = req;
@@ -12,10 +8,14 @@ const server = http.createServer(async (req, res) => {
   await json(req, res);
 
   const route = routes.find(
-    (route) => route.method === method && route.path === url
+    (route) => route.method === method && route.path.test(url)
   );
 
   if (!route) return res.writeHead(404).end();
+
+  const routeParams = req.url.match(route.path);
+
+  console.log(routeParams);
 
   return route.handler(req, res);
 });

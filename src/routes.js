@@ -33,15 +33,7 @@ export const routes = [
     method: "DELETE",
     path: buildRoutePath("/users/:id"),
     handler: (req, res) => {
-      const { name, email } = req.body;
-      const newUser = {
-        id: randomUUID(),
-        name,
-        email,
-      };
-      database.insert("users", newUser);
-
-      return res.writeHead(201).end(JSON.stringify(newUser));
+      return res.writeHead(200).end();
     },
   },
 ];
