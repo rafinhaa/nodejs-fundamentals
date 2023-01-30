@@ -28,4 +28,19 @@ export const routes = [
       return res.writeHead(201).end(JSON.stringify(newUser));
     },
   },
+  {
+    method: "DELETE",
+    path: "/users/:id",
+    handler: (req, res) => {
+      const { name, email } = req.body;
+      const newUser = {
+        id: randomUUID(),
+        name,
+        email,
+      };
+      database.insert("users", newUser);
+
+      return res.writeHead(201).end(JSON.stringify(newUser));
+    },
+  },
 ];
