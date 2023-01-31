@@ -40,4 +40,16 @@ export const routes = [
         : res.writeHead(404).end();
     },
   },
+  {
+    method: "PUT",
+    path: buildRoutePath("/users/:id"),
+    handler: (req, res) => {
+      const id = req.params.id;
+      const { name, email } = req.body;
+
+      return database.update("users", id, { name, email })
+        ? res.writeHead(204).end()
+        : res.writeHead(404).end();
+    },
+  },
 ];
